@@ -82,3 +82,11 @@ jar {
     }
     finalizedBy 'reobfJar'
 }
+
+// Builds reproductibles: meme source => meme jar, octet pour octet.
+// Sans cela Gradle horodate chaque entree du zip et deux compilations du meme
+// code donnent des empreintes differentes — poison pour un modpack indexe.
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
