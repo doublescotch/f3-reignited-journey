@@ -1,9 +1,9 @@
 {
   "required": false,
-  "package": "net.hellkaiser.f3reignitejourney.mixin",
+  "package": "net.hellkaiser.f3reignitedjourney.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "refmap": "f3reignitejourney.refmap.json",
+  "refmap": "f3reignitedjourney.refmap.json",
   "mixins": [
   ],
   "client": [

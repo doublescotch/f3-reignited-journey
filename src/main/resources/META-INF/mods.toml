@@ -4,7 +4,7 @@ license = "MIT"
 issueTrackerURL = "https://github.com/doublescotch/f3-reignited-journey/issues"
 
 [[mods]]
-modId = "f3reignitejourney"
+modId = "f3reignitedjourney"
 version = "${version}"
 displayName = "F3 Reignited Journey"
 authors = "Hell_Kaiser"
@@ -17,21 +17,21 @@ Contextual F3 companion patches (each activates only if its target is present):
 - Tough As Nails / Thirst Was Taken: thirst (and temperature) shown inside the Reignited HUD row
 '''
 
-[[dependencies.f3reignitejourney]]
+[[dependencies.f3reignitedjourney]]
 modId = "forge"
 mandatory = true
 versionRange = "[47,)"
 ordering = "NONE"
 side = "CLIENT"
 
-[[dependencies.f3reignitejourney]]
+[[dependencies.f3reignitedjourney]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20.1,1.20.2)"
 ordering = "NONE"
 side = "CLIENT"
 
-[[dependencies.f3reignitejourney]]
+[[dependencies.f3reignitedjourney]]
 modId = "reignitedhud"
 mandatory = false
 versionRange = "[0,)"
@@ -39,14 +39,14 @@ ordering = "AFTER"
 side = "CLIENT"
 
 # Integration soif/temperature (optionnelle, chargee seulement si presente)
-[[dependencies.f3reignitejourney]]
+[[dependencies.f3reignitedjourney]]
 modId = "toughasnails"
 mandatory = false
 versionRange = "[9,)"
 ordering = "AFTER"
 side = "CLIENT"
 
-[[dependencies.f3reignitejourney]]
+[[dependencies.f3reignitedjourney]]
 modId = "thirst"
 mandatory = false
 versionRange = "[1,)"

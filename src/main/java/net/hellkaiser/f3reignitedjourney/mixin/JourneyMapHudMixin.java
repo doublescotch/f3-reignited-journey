@@ -1,4 +1,4 @@
-package net.hellkaiser.f3reignitejourney.mixin;
+package net.hellkaiser.f3reignitedjourney.mixin;
 
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class JourneyMapHudMixin {
 
     @Inject(method = "onRenderOverlay", at = @At("HEAD"), cancellable = true, require = 0)
-    private void f3reignitejourney$hideMinimapWhileDebugOpen(CallbackInfo ci) {
+    private void f3reignitedjourney$hideMinimapWhileDebugOpen(CallbackInfo ci) {
         if (Minecraft.getInstance().options.renderDebug) {
             ci.cancel();
         }

@@ -1,4 +1,4 @@
-package net.hellkaiser.f3reignitejourney.hud;
+package net.hellkaiser.f3reignitedjourney.hud;
 
 import net.minecraft.world.entity.player.Player;
 

@@ -1,4 +1,4 @@
-package net.hellkaiser.f3reignitejourney.hud;
+package net.hellkaiser.f3reignitedjourney.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -26,9 +26,9 @@ public final class HudExtras {
     public static final String REIGNITED = "reignitedhud";
 
     private static final ResourceLocation DROP =
-            new ResourceLocation("f3reignitejourney", "textures/gui/drop.png");
+            new ResourceLocation("f3reignitedjourney", "textures/gui/drop.png");
     private static final ResourceLocation TEMPERATURE =
-            new ResourceLocation("f3reignitejourney", "textures/gui/temperature.png");
+            new ResourceLocation("f3reignitedjourney", "textures/gui/temperature.png");
 
     /** Overlay Forge de Thirst Was Taken (enregistre au-dessus de FOOD_LEVEL). */
     private static final ResourceLocation TWT_OVERLAY = new ResourceLocation("thirst", "thirst_level");

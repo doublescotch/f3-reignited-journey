@@ -1,4 +1,4 @@
-package net.hellkaiser.f3reignitejourney.hud;
+package net.hellkaiser.f3reignitedjourney.hud;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fml.ModList;
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public final class ThirstSources {
     private ThirstSources() {}
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("f3reignitejourney");
+    private static final Logger LOGGER = LoggerFactory.getLogger("f3reignitedjourney");
 
     public static final String TAN = "toughasnails";
     public static final String TWT = "thirst";

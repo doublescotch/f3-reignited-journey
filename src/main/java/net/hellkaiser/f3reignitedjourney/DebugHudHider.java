@@ -1,4 +1,4 @@
-package net.hellkaiser.f3reignitejourney;
+package net.hellkaiser.f3reignitedjourney;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
  * donc le rendu Reignited (accroché au Post hotbar par notre mixin) disparaît
  * aussi pendant F3 — double verrou avec le mixin.
  */
-@Mod.EventBusSubscriber(modid = F3ReigniteJourney.MOD_ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = F3ReignitedJourney.MOD_ID, value = Dist.CLIENT)
 public class DebugHudHider {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

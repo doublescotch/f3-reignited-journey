@@ -1,4 +1,4 @@
-package net.hellkaiser.f3reignitejourney.hud;
+package net.hellkaiser.f3reignitedjourney.hud;
 
 import dev.ghen.thirst.foundation.common.capability.IThirst;
 import dev.ghen.thirst.foundation.common.capability.ModCapabilities;

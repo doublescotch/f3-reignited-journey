@@ -22,14 +22,14 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            mods { f3reignitejourney { source sourceSets.main } }
+            mods { f3reignitedjourney { source sourceSets.main } }
         }
     }
 }
 
 mixin {
-    add sourceSets.main, 'f3reignitejourney.refmap.json'
-    config 'f3reignitejourney.mixins.json'
+    add sourceSets.main, 'f3reignitedjourney.refmap.json'
+    config 'f3reignitedjourney.mixins.json'
 }
 
 repositories {
@@ -71,13 +71,13 @@ processResources {
 jar {
     manifest {
         attributes([
-                'Specification-Title'   : 'f3reignitejourney',
+                'Specification-Title'   : 'f3reignitedjourney',
                 'Specification-Vendor'  : 'Hell_Kaiser',
                 'Specification-Version' : '1',
                 'Implementation-Title'  : project.name,
                 'Implementation-Version': project.jar.archiveVersion,
                 'Implementation-Vendor' : 'Hell_Kaiser',
-                'MixinConfigs'          : 'f3reignitejourney.mixins.json'
+                'MixinConfigs'          : 'f3reignitedjourney.mixins.json'
         ])
     }
     finalizedBy 'reobfJar'

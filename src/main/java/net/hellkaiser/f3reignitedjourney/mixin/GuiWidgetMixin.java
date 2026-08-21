@@ -1,4 +1,4 @@
-package net.hellkaiser.f3reignitejourney.mixin;
+package net.hellkaiser.f3reignitedjourney.mixin;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GuiWidgetMixin {
 
     @Inject(method = "renderOverlay", at = @At("HEAD"), cancellable = true, require = 0)
-    private void f3reignitejourney$dedupeAndHideOnDebug(RenderGuiOverlayEvent.Post event, CallbackInfo ci) {
+    private void f3reignitedjourney$dedupeAndHideOnDebug(RenderGuiOverlayEvent.Post event, CallbackInfo ci) {
         // un seul rendu par frame: celui qui suit la hotbar
         if (!event.getOverlay().id().equals(VanillaGuiOverlay.HOTBAR.id())) {
             ci.cancel();

@@ -1,6 +1,6 @@
-package net.hellkaiser.f3reignitejourney;
+package net.hellkaiser.f3reignitedjourney;
 
-import net.hellkaiser.f3reignitejourney.hud.HudExtras;
+import net.hellkaiser.f3reignitedjourney.hud.HudExtras;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
@@ -18,11 +18,11 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  *
  * Chaque volet est independant et inerte si son mod cible est absent.
  */
-@Mod(F3ReigniteJourney.MOD_ID)
-public class F3ReigniteJourney {
-    public static final String MOD_ID = "f3reignitejourney";
+@Mod(F3ReignitedJourney.MOD_ID)
+public class F3ReignitedJourney {
+    public static final String MOD_ID = "f3reignitedjourney";
 
-    public F3ReigniteJourney() {
+    public F3ReignitedJourney() {
         if (FMLEnvironment.dist.isClient() && ModList.get().isLoaded(HudExtras.REIGNITED)) {
             MinecraftForge.EVENT_BUS.register(HudExtras.class);
         }

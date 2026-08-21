@@ -1,4 +1,4 @@
-package net.hellkaiser.f3reignitejourney.hud;
+package net.hellkaiser.f3reignitedjourney.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.effect.MobEffects;
