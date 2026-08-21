@@ -187,6 +187,10 @@ Targeting another mod's classes is done by string — `@Pseudo @Mixin(targets = 
 **Built against** Forge 47.3.0, Java 17, official mappings. No `@Shadow` anywhere.
 
 <br>
+
+Building from source needs three jars dropped into `libs/`, which are not redistributed here: `reignitedhud.jar`, `toughasnails.jar` and `thirst.jar`. They are `compileOnly` — none of their code ends up in the built jar, and none of them is required to *run* it — but `build.gradle` references them by name, so compilation fails without them. Class names are identical across mapping sets and mod-own methods are never remapped, so compiling against release jars is safe here.
+
+<br>
 <br>
 
 ---
