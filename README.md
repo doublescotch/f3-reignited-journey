@@ -188,7 +188,7 @@ Targeting another mod's classes is done by string — `@Pseudo @Mixin(targets = 
 
 <br>
 
-Building from source needs three jars dropped into `libs/`, which are not redistributed here: `reignitedhud.jar`, `toughasnails.jar` and `thirst.jar`. They are `compileOnly` — none of their code ends up in the built jar, and none of them is required to *run* it — but `build.gradle` references them by name, so compilation fails without them. Class names are identical across mapping sets and mod-own methods are never remapped, so compiling against release jars is safe here.
+Reignited HUD, Tough As Nails and Thirst Was Taken resolve from the Modrinth Maven. Clone and run `gradlew build`; there is nothing to download by hand. All three are `compileOnly` and none is required to *run* the mod. Reignited HUD is pinned by version **id** rather than number, because thirteen of its published files share the number `1.1.0`.
 
 <br>
 <br>

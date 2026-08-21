@@ -32,11 +32,15 @@ mixin {
     config 'f3reignitejourney.mixins.json'
 }
 
-dependencies {
-    // Jars de reference (non redistribues): __REFS du projet en local,
-    // sinon libs/ pour un clone du depot public.
-    def refsDir = file('../__REFS').exists() ? file('../__REFS') : file('libs')
+repositories {
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
+}
 
+dependencies {
     minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
@@ -47,9 +51,9 @@ dependencies {
     // les appels compiles ici resolvent tels quels en production.
     // Chaque usage est isole dans une classe dediee, chargee uniquement si le mod
     // correspondant est present (ModList) => aucun NoClassDefFoundError sans eux.
-    compileOnly files(new File(refsDir, 'reignitedhud.jar'))
-    compileOnly files(new File(refsDir, 'toughasnails.jar'))
-    compileOnly files(new File(refsDir, 'thirst.jar'))
+    compileOnly fg.deobf('maven.modrinth:reignited-hud:LgYSKthd')  // ID de version: 13 fichiers portent le numero 1.1.0
+    compileOnly fg.deobf('maven.modrinth:tough-as-nails:9.2.0.171')
+    compileOnly fg.deobf('maven.modrinth:thirst-was-taken:1.20.1-1.4.0')
 }
 
 tasks.withType(JavaCompile).configureEach {
