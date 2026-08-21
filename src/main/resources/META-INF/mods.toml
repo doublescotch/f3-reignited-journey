@@ -1,14 +1,14 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
 license = "MIT"
-issueTrackerURL = "https://github.com/doublescotch/f3-reignite-journey/issues"
+issueTrackerURL = "https://github.com/doublescotch/f3-reignited-journey/issues"
 
 [[mods]]
 modId = "f3reignitejourney"
 version = "${version}"
-displayName = "F3 Reignite Journey"
+displayName = "F3 Reignited Journey"
 authors = "Hell_Kaiser"
-displayURL = "https://github.com/doublescotch/f3-reignite-journey"
+displayURL = "https://github.com/doublescotch/f3-reignited-journey"
 description = '''
 Contextual F3 companion patches (each activates only if its target is present):
 - Reignited HUD: rendered once per frame instead of once per overlay event (major FPS fix), hidden while F3 is open

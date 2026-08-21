@@ -1,5 +1,5 @@
 <div align="center">
-<h1>🧭 F3 Reignite Journey</h1>
+<h1>🧭 F3 Reignited Journey</h1>
 <h3>A readable debug screen — and a serious FPS fix for Reignited HUD.</h3>
 <p><b>Four tiny patches. Each one activates only if the mod it targets is installed.</b></p>
 <p>

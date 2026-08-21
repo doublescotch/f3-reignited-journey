@@ -12,7 +12,7 @@ base {
 }
 
 // Build hors OneDrive: evite les verrous de synchronisation
-layout.buildDirectory = file("C:/mcbuild/better-f3-reignite-journey")
+layout.buildDirectory = file("C:/mcbuild/f3-reignited-journey")
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
