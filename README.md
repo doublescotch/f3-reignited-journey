@@ -1,7 +1,7 @@
 <div align="center">
 <h1>🧭 F3 Reignited Journey</h1>
-<h3>A readable debug screen — and a serious FPS fix for Reignited HUD.</h3>
-<p><b>Four tiny patches. Each one activates only if the mod it targets is installed.</b></p>
+<h3>A readable debug screen, a serious FPS fix, and thirst in your HUD row.</h3>
+<p><b>Six tiny patches. Each one activates only if the mod it targets is installed.</b></p>
 <p>
 <img src="https://img.shields.io/badge/Minecraft-1.20.1-brightgreen?style=for-the-badge" alt="Minecraft 1.20.1">
 <img src="https://img.shields.io/badge/Loader-Forge-e04e14?style=for-the-badge" alt="Forge">
@@ -95,13 +95,55 @@ The result is a debug screen with nothing in front of it, at any resolution — 
 
 <br>
 
+### 💧 Thirst and temperature, inside the Reignited HUD row
+
+<br>
+
+Thirst mods draw their own bar, in their own corner, in their own style. Reignited HUD draws a clean single row. Running both means reading your character in two places at once.
+
+<br>
+
+This patch moves the reading **into the row**, as a drop icon and a counter, right after the vanilla entries — and hides the thirst mod's own bar so nothing is shown twice.
+
+<br>
+
+| Thirst mod | Handled |
+|:--|:--|
+| **[Tough As Nails](https://www.curseforge.com/minecraft/mc-mods/tough-as-nails)** | thirst **and** temperature |
+| **[Thirst Was Taken](https://www.curseforge.com/minecraft/mc-mods/thirst-was-taken)** | thirst |
+
+<br>
+
+Both are read through one shared interface, so whichever you have installed is picked up automatically. If you somehow run both, Tough As Nails wins. The icon **blinks when hydration reaches zero**, the same way vanilla warns you elsewhere.
+
+<br>
+
+> ### 📐 The position is computed, not hardcoded
+>
+>
+> Reignited HUD draws only the entries you enabled — food, saturation, armor, toughness — so the row is a different width for every player.
+>
+>
+> Rather than guessing coordinates, this patch **replays the HUD cursor** across the entries actually being drawn, and starts where they end. Your icons land next to your row, not on top of it.
+
+<br>
+
+<!-- SCREENSHOT: the HUD row with the drop icon and counter -->
+
+<br>
+<br>
+
+---
+
+<br>
+
 ### 🧩 Contextual by design
 
 <br>
 
 Each patch targets a specific mod, and **does nothing at all if that mod is absent**.
 
-Install this alongside Reignited HUD only, JourneyMap only, both, or neither: the patches that have no target simply never activate. No crash, no warning, no hard dependency.
+Install this alongside Reignited HUD only, JourneyMap only, a thirst mod only, all of them, or none: the patches that have no target simply never activate. No crash, no warning, no hard dependency.
 
 <br>
 
@@ -187,8 +229,23 @@ Targeting another mod's classes is done by string — `@Pseudo @Mixin(targets = 
 **Built against** Forge 47.3.0, Java 17, official mappings. No `@Shadow` anywhere.
 
 <br>
+<br>
 
-Reignited HUD, Tough As Nails and Thirst Was Taken resolve from the Modrinth Maven. Clone and run `gradlew build`; there is nothing to download by hand. All three are `compileOnly` and none is required to *run* the mod. Reignited HUD is pinned by version **id** rather than number, because thirteen of its published files share the number `1.1.0`.
+---
+
+## 📦 Source
+
+<br>
+
+The full source is on GitHub under the **MIT** licence — read it, build it, fork it, or open an issue.
+
+<br>
+
+**[github.com/doublescotch/f3-reignited-journey](https://github.com/doublescotch/f3-reignited-journey)**
+
+<br>
+
+Branches follow the target: **`1.20.1/forge`**. Every dependency resolves from Maven, so a clone builds with `gradlew build` alone — there is nothing to download by hand. Reignited HUD, Tough As Nails and Thirst Was Taken come from the Modrinth Maven — Reignited HUD pinned by version **id** rather than number, because thirteen of its published files share the number `1.1.0`.
 
 <br>
 <br>
