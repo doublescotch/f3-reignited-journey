@@ -1,0 +1,54 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+license = "MIT"
+issueTrackerURL = "https://github.com/doublescotch/f3-reignite-journey/issues"
+
+[[mods]]
+modId = "f3reignitejourney"
+version = "${version}"
+displayName = "F3 Reignite Journey"
+authors = "Hell_Kaiser"
+displayURL = "https://github.com/doublescotch/f3-reignite-journey"
+description = '''
+Contextual F3 companion patches (each activates only if its target is present):
+- Reignited HUD: rendered once per frame instead of once per overlay event (major FPS fix), hidden while F3 is open
+- JourneyMap: minimap hidden while F3 is open
+- vanilla hotbar hidden while F3 is open
+- Tough As Nails / Thirst Was Taken: thirst (and temperature) shown inside the Reignited HUD row
+'''
+
+[[dependencies.f3reignitejourney]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.f3reignitejourney]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,1.20.2)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.f3reignitejourney]]
+modId = "reignitedhud"
+mandatory = false
+versionRange = "[0,)"
+ordering = "AFTER"
+side = "CLIENT"
+
+# Integration soif/temperature (optionnelle, chargee seulement si presente)
+[[dependencies.f3reignitejourney]]
+modId = "toughasnails"
+mandatory = false
+versionRange = "[9,)"
+ordering = "AFTER"
+side = "CLIENT"
+
+[[dependencies.f3reignitejourney]]
+modId = "thirst"
+mandatory = false
+versionRange = "[1,)"
+ordering = "AFTER"
+side = "CLIENT"

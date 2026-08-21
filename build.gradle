@@ -1,0 +1,76 @@
+plugins {
+    id 'eclipse'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+
+group = project.maven_group
+version = project.mod_version
+
+base {
+    archivesName = project.archives_base_name
+}
+
+// Build hors OneDrive: evite les verrous de synchronisation
+layout.buildDirectory = file("C:/mcbuild/better-f3-reignite-journey")
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: project.minecraft_version
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            mods { f3reignitejourney { source sourceSets.main } }
+        }
+    }
+}
+
+mixin {
+    add sourceSets.main, 'f3reignitejourney.refmap.json'
+    config 'f3reignitejourney.mixins.json'
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    // Integrations OPTIONNELLES: compileOnly seulement.
+    // Les noms de CLASSES sont identiques entre mappings officiels et production,
+    // et les methodes appelees appartiennent a ces mods (jamais remappees) — donc
+    // les appels compiles ici resolvent tels quels en production.
+    // Chaque usage est isole dans une classe dediee, chargee uniquement si le mod
+    // correspondant est present (ModList) => aucun NoClassDefFoundError sans eux.
+    compileOnly files('libs/reignitedhud.jar')
+    compileOnly files('libs/toughasnails.jar')
+    compileOnly files('libs/thirst.jar')
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 17
+    it.options.encoding = 'UTF-8'
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('META-INF/mods.toml') {
+        expand 'version': project.version
+    }
+}
+
+jar {
+    manifest {
+        attributes([
+                'Specification-Title'   : 'f3reignitejourney',
+                'Specification-Vendor'  : 'Hell_Kaiser',
+                'Specification-Version' : '1',
+                'Implementation-Title'  : project.name,
+                'Implementation-Version': project.jar.archiveVersion,
+                'Implementation-Vendor' : 'Hell_Kaiser',
+                'MixinConfigs'          : 'f3reignitejourney.mixins.json'
+        ])
+    }
+    finalizedBy 'reobfJar'
+}

@@ -1,0 +1,16 @@
+{
+  "required": false,
+  "package": "net.hellkaiser.f3reignitejourney.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "refmap": "f3reignitejourney.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "GuiWidgetMixin",
+    "JourneyMapHudMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}
