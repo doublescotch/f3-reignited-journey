@@ -103,7 +103,7 @@ Thirst mods draw their own bar, in their own corner, in their own style. Reignit
 
 <br>
 
-This patch moves the reading **into the row**, as a drop icon and a counter, right after the vanilla entries — and hides the thirst mod's own bar so nothing is shown twice.
+This patch moves the reading **into the row**, as a drop icon and a counter, inserted **right after hunger** — where a consumable stat belongs; the entries that follow slide over to make room. The thirst mod's own bar is hidden so nothing is shown twice.
 
 <br>
 
