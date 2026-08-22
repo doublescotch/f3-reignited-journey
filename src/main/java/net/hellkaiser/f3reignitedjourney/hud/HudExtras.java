@@ -91,7 +91,13 @@ public final class HudExtras {
         if (!ReignitedRow.skinShown()) return;
         ResourceLocation skin = player.getSkinTextureLocation();
         graphics.blit(skin, HEAD_X, HEAD_Y, HEAD_SIZE, HEAD_SIZE, 8.0F, 8.0F, 8, 8, 64, 64);
+        // Fonction de melange EXPLICITE: enableBlend() seul herite de l'etat
+        // precedent, et un mode additif residuel faisait luire les pixels
+        // blancs semi-transparents du calque chapeau (collerette constatee en
+        // jeu, absente en menu ou c'est le dessin de Reignited qui s'affiche,
+        // lui en SRC_ALPHA/ONE_MINUS_SRC_ALPHA — qu'on reproduit ici).
         RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
         graphics.blit(skin, HEAD_X, HEAD_Y, HEAD_SIZE, HEAD_SIZE, 40.0F, 8.0F, 8, 8, 64, 64);
         RenderSystem.disableBlend();
     }
