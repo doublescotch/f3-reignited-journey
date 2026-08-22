@@ -52,7 +52,15 @@ public class GuiWidgetMixin {
         // masquage pendant l'écran de debug F3
         if (Minecraft.getInstance().options.renderDebug) {
             ci.cancel();
+            return;
         }
+        // TÊTE DU JOUEUR — dessinée ICI, AVANT le rendu du widget: le cadre de
+        // Reignited passe ensuite PAR-DESSUS et recouvre les bords du visage,
+        // exactement l'empilement de son dessin d'origine (le sien, à z=-1000,
+        // échoue au test de profondeur en jeu direct et reste vide). La
+        // dessiner après tout — comme en 1.1.4/1.1.5 — la posait AU-DESSUS du
+        // cadre: bordure visible en trop et pixels débordants (retour in-game).
+        HudExtras.drawHeadUnderFrame(event.getGuiGraphics());
     }
 
     @Inject(method = "getFoodAndArmor", at = @At("HEAD"), require = 0)

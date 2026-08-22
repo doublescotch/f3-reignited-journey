@@ -81,25 +81,30 @@ public final class HudExtras {
     private static final int HEAD_X = 21, HEAD_Y = 17, HEAD_SIZE = 17;
 
     /**
-     * Redessine le visage du skin au z normal du HUD. Reignited le dessine en
-     * draw direct a z = -1000: cette passe echoue au test de profondeur en jeu
-     * (la vignette plein ecran a deja ecrit la sienne) et le cadre restait
-     * vide hors menus. Plutot que de lutter contre son etat GPU, on repeint le
-     * visage proprement par-dessus: face (8,8) puis calque chapeau (40,8).
+     * Redessine le visage du skin au z normal du HUD, appele par GuiWidgetMixin
+     * AVANT le rendu du widget: le cadre de Reignited passe ensuite par-dessus
+     * et recouvre les bords, comme dans son empilement d'origine. Son propre
+     * dessin (draw direct a z = -1000) echoue au test de profondeur en jeu et
+     * laissait le cadre vide hors menus.
+     *
+     * Pas de condition d'ecran: le chat ou l'inventaire ouverts laissent le
+     * HUD se dessiner derriere, la tete doit suivre le widget partout.
      */
-    private static void drawHead(GuiGraphics graphics, LocalPlayer player) {
-        if (!ReignitedRow.skinShown()) return;
-        ResourceLocation skin = player.getSkinTextureLocation();
-        graphics.blit(skin, HEAD_X, HEAD_Y, HEAD_SIZE, HEAD_SIZE, 8.0F, 8.0F, 8, 8, 64, 64);
-        // Fonction de melange EXPLICITE: enableBlend() seul herite de l'etat
-        // precedent, et un mode additif residuel faisait luire les pixels
-        // blancs semi-transparents du calque chapeau (collerette constatee en
-        // jeu, absente en menu ou c'est le dessin de Reignited qui s'affiche,
-        // lui en SRC_ALPHA/ONE_MINUS_SRC_ALPHA — qu'on reproduit ici).
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        graphics.blit(skin, HEAD_X, HEAD_Y, HEAD_SIZE, HEAD_SIZE, 40.0F, 8.0F, 8, 8, 64, 64);
-        RenderSystem.disableBlend();
+    public static void drawHeadUnderFrame(GuiGraphics graphics) {
+        try {
+            LocalPlayer player = Minecraft.getInstance().player;
+            if (player == null || !ReignitedRow.skinShown()) return;
+            ResourceLocation skin = player.getSkinTextureLocation();
+            graphics.blit(skin, HEAD_X, HEAD_Y, HEAD_SIZE, HEAD_SIZE, 8.0F, 8.0F, 8, 8, 64, 64);
+            // Fonction de melange EXPLICITE: enableBlend() seul herite de
+            // l'etat precedent, un mode additif residuel faisait luire les
+            // pixels semi-transparents du calque chapeau.
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            graphics.blit(skin, HEAD_X, HEAD_Y, HEAD_SIZE, HEAD_SIZE, 40.0F, 8.0F, 8, 8, 64, 64);
+            RenderSystem.disableBlend();
+        } catch (Throwable ignored) {
+        }
     }
 
     /**
@@ -126,15 +131,12 @@ public final class HudExtras {
 
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
-        if (player == null || mc.options.hideGui || mc.screen != null) return;
+        // PAS de condition d'ecran: chat et menus laissent le HUD (et le widget
+        // Reignited) se dessiner derriere — la goutte et son compteur doivent
+        // suivre, sinon la rangee devient incoherente des qu'on tape /commande.
+        if (player == null || mc.options.hideGui) return;
 
         GuiGraphics graphics = event.getGuiGraphics();
-
-        // La tete ne depend d'aucun mod de soif: des que Reignited est la.
-        try {
-            drawHead(graphics, player);
-        } catch (Throwable ignored) {
-        }
 
         if (ThirstSources.get() == null || !ThirstSources.shouldRender(player)) return;
 
