@@ -69,6 +69,28 @@ public final class ReignitedRow {
         return stringWidth(text) + SPACING_PAD;
     }
 
+    /** L'entree faim est-elle affichee ? (condition de l'insertion apres-faim) */
+    public static boolean foodShown() {
+        return bool(ReignitedHudConfig.FOOD_LEVEL, true);
+    }
+
+    /** Position X (icone) du trou ouvert JUSTE APRES l'entree faim. */
+    public static int afterFoodIconX(Player player) {
+        int x = bool(ReignitedHudConfig.PLAYER_SKIN, true) ? 47 : 4;
+        return x + advance(String.valueOf(player.getFoodData().getFoodLevel()));
+    }
+
+    /** Position X (texte) du trou ouvert JUSTE APRES l'entree faim. */
+    public static int afterFoodTextX(Player player) {
+        int x = bool(ReignitedHudConfig.PLAYER_SKIN, true) ? 59 : 16;
+        return x + advance(String.valueOf(player.getFoodData().getFoodLevel()));
+    }
+
+    /** Le cadre-portrait (et donc la tete) est-il active dans leur config ? */
+    public static boolean skinShown() {
+        return bool(ReignitedHudConfig.PLAYER_SKIN, true);
+    }
+
     public static int stringWidth(String text) {
         try {
             return RenderDrawCallback.getStringWidth(text);

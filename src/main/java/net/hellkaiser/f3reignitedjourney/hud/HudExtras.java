@@ -45,6 +45,57 @@ public final class HudExtras {
         return ModList.get().isLoaded(REIGNITED) && ThirstSources.get() != null;
     }
 
+    // ------------------------------------------------------------ insertion ---
+
+    /** Decalage (px) applique aux entrees de la rangee apres la faim. */
+    private static int rowShiftPx;
+    /** Vrai quand la goutte s'insere apres la faim (faim visible + soif active). */
+    private static boolean insertAfterFood;
+
+    /**
+     * Appele par GuiWidgetMixin en tete de getFoodAndArmor, AVANT que la rangee
+     * ne soit dessinee: fige pour cette frame la largeur du bloc soif que les
+     * redirects intercalent apres l'entree faim.
+     */
+    public static void computeRowShift(LocalPlayer player) {
+        rowShiftPx = 0;
+        insertAfterFood = false;
+        try {
+            ThirstSource source = ThirstSources.get();
+            if (source == null || player == null) return;
+            if (!ThirstSources.shouldRender(player)) return;
+            if (!ReignitedRow.foodShown()) return;   // faim masquee: retour en fin de rangee
+            rowShiftPx = ReignitedRow.advance(String.valueOf(source.thirst(player)));
+            insertAfterFood = true;
+        } catch (Throwable ignored) {
+        }
+    }
+
+    public static int rowShift() {
+        return rowShiftPx;
+    }
+
+    // ------------------------------------------------------- tete du joueur ---
+
+    /** Position et taille du visage dans le cadre-portrait (drawPlayerIcon(21,17,17)). */
+    private static final int HEAD_X = 21, HEAD_Y = 17, HEAD_SIZE = 17;
+
+    /**
+     * Redessine le visage du skin au z normal du HUD. Reignited le dessine en
+     * draw direct a z = -1000: cette passe echoue au test de profondeur en jeu
+     * (la vignette plein ecran a deja ecrit la sienne) et le cadre restait
+     * vide hors menus. Plutot que de lutter contre son etat GPU, on repeint le
+     * visage proprement par-dessus: face (8,8) puis calque chapeau (40,8).
+     */
+    private static void drawHead(GuiGraphics graphics, LocalPlayer player) {
+        if (!ReignitedRow.skinShown()) return;
+        ResourceLocation skin = player.getSkinTextureLocation();
+        graphics.blit(skin, HEAD_X, HEAD_Y, HEAD_SIZE, HEAD_SIZE, 8.0F, 8.0F, 8, 8, 64, 64);
+        RenderSystem.enableBlend();
+        graphics.blit(skin, HEAD_X, HEAD_Y, HEAD_SIZE, HEAD_SIZE, 40.0F, 8.0F, 8, 8, 64, 64);
+        RenderSystem.disableBlend();
+    }
+
     /**
      * La barre du mod source n'a plus lieu d'etre: son ancrage (la barre de faim
      * vanilla) est supprime par Reignited HUD.
@@ -64,18 +115,30 @@ public final class HudExtras {
      */
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onOverlayPost(RenderGuiOverlayEvent.Post event) {
-        if (!active()) return;
+        if (!ModList.get().isLoaded(REIGNITED)) return;
         if (!VanillaGuiOverlay.HOTBAR.id().equals(event.getOverlay().id())) return;
 
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
         if (player == null || mc.options.hideGui || mc.screen != null) return;
-        if (!ThirstSources.shouldRender(player)) return;
+
+        GuiGraphics graphics = event.getGuiGraphics();
+
+        // La tete ne depend d'aucun mod de soif: des que Reignited est la.
+        try {
+            drawHead(graphics, player);
+        } catch (Throwable ignored) {
+        }
+
+        if (ThirstSources.get() == null || !ThirstSources.shouldRender(player)) return;
 
         try {
-            GuiGraphics graphics = event.getGuiGraphics();
-            int iconX = ReignitedRow.iconEndX(player);
-            int textX = ReignitedRow.textEndX(player);
+            // Faim visible: la goutte s'insere dans le trou ouvert par les
+            // redirects, juste apres l'entree faim. Sinon: fin de rangee.
+            int iconX = insertAfterFood ? ReignitedRow.afterFoodIconX(player)
+                                        : ReignitedRow.iconEndX(player);
+            int textX = insertAfterFood ? ReignitedRow.afterFoodTextX(player)
+                                        : ReignitedRow.textEndX(player);
 
             ThirstSource source = ThirstSources.get();
             String value = String.valueOf(source.thirst(player));
@@ -87,8 +150,10 @@ public final class HudExtras {
                     low ? COLOR_THIRST_LOW : COLOR_THIRST, low ? SHADOW_THIRST_LOW : SHADOW_THIRST);
 
             if (ThirstSources.hasTemperature()) {
-                int advance = ReignitedRow.advance(value);
-                drawIcon(graphics, TEMPERATURE, iconX + advance, temperatureColor(player), 1.0F);
+                // Fin REELLE de la rangee: fin native + largeur du bloc insere.
+                int tempX = insertAfterFood ? ReignitedRow.iconEndX(player) + rowShiftPx
+                                            : iconX + ReignitedRow.advance(value);
+                drawIcon(graphics, TEMPERATURE, tempX, temperatureColor(player), 1.0F);
             }
         } catch (Throwable ignored) {
             // un HUD tiers ne doit jamais casser le rendu du jeu
