@@ -101,11 +101,20 @@ public final class HudExtras {
         return 0.35F + 0.65F * (0.5F + 0.5F * (float) Math.sin(phase));
     }
 
+    /**
+     * Meme technique que la police de Reignited (drawFontWithShadow): une copie
+     * sombre decalee de +1,+1 puis le glyphe teinte. La couleur d'ombre est le
+     * quart de la teinte, la convention des ombres de texte Minecraft. Les
+     * textures gardent leur ligne et colonne 9 vides pour que l'ombre reste
+     * dans la case de 10x10.
+     */
     private static void drawIcon(GuiGraphics graphics, ResourceLocation icon, int x, int color, float alpha) {
         float r = ((color >> 16) & 0xFF) / 255.0F;
         float g = ((color >> 8) & 0xFF) / 255.0F;
         float b = (color & 0xFF) / 255.0F;
         RenderSystem.enableBlend();
+        graphics.setColor(r / 4.0F, g / 4.0F, b / 4.0F, alpha);
+        graphics.blit(icon, x + 1, ReignitedRow.ICON_Y + 1, 0.0F, 0.0F, 10, 10, 10, 10);
         graphics.setColor(r, g, b, alpha);
         graphics.blit(icon, x, ReignitedRow.ICON_Y, 0.0F, 0.0F, 10, 10, 10, 10);
         graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
