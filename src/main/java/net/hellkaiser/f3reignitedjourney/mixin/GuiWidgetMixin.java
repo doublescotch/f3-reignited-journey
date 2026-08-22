@@ -1,5 +1,6 @@
 package net.hellkaiser.f3reignitedjourney.mixin;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
@@ -36,6 +37,21 @@ public class GuiWidgetMixin {
         // masquage pendant l'écran de debug F3
         if (Minecraft.getInstance().options.renderDebug) {
             ci.cancel();
+            return;
         }
+        // 3. TÊTE DU JOUEUR — drawPlayerIcon dessine le visage à z = -1000 en
+        // draw direct. À l'origine le HUD se redessinait ~20x par frame, dont
+        // une passe très tôt où le tampon de profondeur était encore vierge:
+        // la tête passait. Notre unique passe (hotbar) arrive APRÈS la vignette
+        // plein écran, qui a déjà écrit sa profondeur → le visage échouait au
+        // test et disparaissait en jeu (visible seulement menu ouvert, où
+        // l'état de rendu diffère). On coupe le test de profondeur le temps du
+        // rendu du widget: un HUD 2D n'en a aucun besoin.
+        RenderSystem.disableDepthTest();
+    }
+
+    @Inject(method = "renderOverlay", at = @At("TAIL"), require = 0)
+    private void f3reignitedjourney$restoreDepthTest(RenderGuiOverlayEvent.Post event, CallbackInfo ci) {
+        RenderSystem.enableDepthTest();
     }
 }

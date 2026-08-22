@@ -11,24 +11,26 @@ import os
 import struct
 import zlib
 
+# Glyphes de 7 px de haut — la hauteur des chiffres de la police Minecraft —
+# poses a la ligne 1 de la case: le texte du compteur est rendu a TEXT_Y = 32
+# soit ICON_Y + 1, donc ligne 1..7 = exactement les memes pixels-ecran que les
+# chiffres (retour in-game: 9 px depassait d'une ligne en haut ET en bas).
 DROP = [
+    ".........",
     "....#....",
-    "....#....",
-    "...###...",
     "...###...",
     "..#####..",
     ".#######.",
     ".#######.",
-    ".#######.",
     "..#####..",
+    "...###...",
 ]
 
 TEMP = [
+    ".........",
     "....#....",
-    "...###...",
     "...#.#...",
     "...#.#...",
-    "...###...",
     "..#####..",
     ".#######.",
     ".#######.",
