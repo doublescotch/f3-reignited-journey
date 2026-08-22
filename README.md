@@ -12,7 +12,7 @@
 <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge" alt="MIT">
 <img src="https://img.shields.io/badge/Dependencies-none-success?style=for-the-badge" alt="No dependencies">
 </p>
-<p><i>~5 KB. No config. Nothing to set up.</i></p>
+<p><i>~17 KB. No config. Nothing to set up.</i></p>
 </div>
 
 ---
